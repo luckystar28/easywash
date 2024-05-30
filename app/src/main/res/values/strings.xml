@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Easy Wash</string>
+    <string name="invalid">Email / Password Salah</string>
+    <string name="logout">Keluar</string>
+</resources>
