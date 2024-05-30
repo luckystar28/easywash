@@ -4,12 +4,16 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ExitToApp
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,15 +27,19 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import org.d3if3067.easywashfix.R // Import your drawable resources
+import org.d3if3067.easywashfix.model.Status
 import org.d3if3067.easywashfix.navigation.Screen
 
 @Composable
-fun DashboardScreen(navController: NavHostController , viewModel: MainViewModel) {
+fun DashboardScreen(navController: NavHostController, viewModel: MainViewModel) {
+    val statusList by viewModel.statusList.collectAsState()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFCAE9FB))
             .padding(16.dp)
+            .verticalScroll(rememberScrollState()) // Tambahkan baris ini
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -49,38 +57,30 @@ fun DashboardScreen(navController: NavHostController , viewModel: MainViewModel)
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            Card(
-                shape = RoundedCornerShape(16.dp),
-                modifier = Modifier.fillMaxWidth(),
-                elevation = CardDefaults.cardElevation(4.dp)
+            // Menampilkan setiap status yang diambil dari Firestore dalam bentuk kartu
+            statusList.forEach { status ->
+                StatusCard(status)
+                Spacer(modifier = Modifier.height(16.dp))
+            }
+
+            // Button untuk status
+            Button(
+                onClick = { navController.navigate(Screen.Status.route) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                colors = ButtonDefaults.buttonColors(Color(0xFF00BCD4))
             ) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    Text(text = "Sedang Di Proses", fontWeight = FontWeight.Bold)
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = "Nama : Asep Susanto")
-                    Text(text = "Nomor Telepon : 081909203596")
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(text = "Proses : ")
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(
-                            text = "Dicuci",
-                            color = Color.White,
-                            modifier = Modifier
-                                .background(Color(0xFFFFAB91), shape = RoundedCornerShape(8.dp))
-                                .padding(horizontal = 8.dp, vertical = 4.dp)
-                        )
-                    }
-                }
+                Text(
+                    text = "Tambah Status",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Bagian lainnya tetap sama
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly
@@ -136,7 +136,41 @@ fun DashboardScreen(navController: NavHostController , viewModel: MainViewModel)
         }
     }
 }
-
+@Composable
+fun StatusCard(status: Status) {
+    Card(
+        shape = RoundedCornerShape(16.dp),
+        modifier = Modifier.fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(4.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(text = "Sedang Di Proses", fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(text = "Nama : ${status.name}")
+            Text(text = "Nomor Telepon : ${status.phoneNumber}")
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(text = "Proses : ")
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    text = status.status,
+                    color = Color.White,
+                    modifier = Modifier
+                        .background(
+                            if (status.status == "Dicuci") Color(0xFFFFAB91) else Color(0xFF84F84D),
+                            shape = RoundedCornerShape(8.dp)
+                        )
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                )
+            }
+        }
+    }
+}
 @Composable
 fun ImageCard(imagePainter: Painter, text: String, navController: NavHostController, destination: String) {
     Card(
@@ -163,7 +197,7 @@ fun ImageCard(imagePainter: Painter, text: String, navController: NavHostControl
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun DashboardScreenPreview() {
     DashboardScreen(rememberNavController(), viewModel = MainViewModel())

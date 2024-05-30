@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import org.d3if3067.easywashfix.model.Pelanggan
+import org.d3if3067.easywashfix.model.Status
 import org.d3if3067.easywashfix.model.User
 import org.d3if3067.easywashfix.navigation.Screen
 
@@ -27,15 +28,17 @@ class MainViewModel : ViewModel() {
     private val _customers = MutableLiveData<List<Pelanggan>>()
     val customers: LiveData<List<Pelanggan>> get() = _customers
 
+    private val _statusList = MutableStateFlow<List<Status>>(emptyList())
+    val statusList: StateFlow<List<Status>> = _statusList
+
     init {
         // Check if user is logged in
         auth.currentUser?.let {
             fetchUserData(it.uid)
         }
         fetchCustomers()
+        fetchStatusData()
     }
-
-    private val db = FirebaseFirestore.getInstance()
 
     private fun fetchUserData(uid: String) {
         viewModelScope.launch {
@@ -59,6 +62,19 @@ class MainViewModel : ViewModel() {
             } catch (e: Exception) {
                 // Handle error
                 Log.e("MainViewModel", "Error fetching customers", e)
+            }
+        }
+    }
+
+    private fun fetchStatusData() {
+        viewModelScope.launch {
+            try {
+                val snapshot = firestore.collection("status").get().await()
+                val statuses = snapshot.documents.map { it.toObject<Status>()!! }
+                _statusList.value = statuses
+            } catch (e: Exception) {
+                // Handle error
+                Log.e("MainViewModel", "Error fetching status data", e)
             }
         }
     }
@@ -91,6 +107,29 @@ class MainViewModel : ViewModel() {
                 }
             } catch (e: Exception) {
                 onFailure()
+            }
+        }
+    }
+    fun editStatus(updatedStatus: Status) {
+        viewModelScope.launch {
+            try {
+                // Update status di Firestore menggunakan ID status yang diubah
+                updatedStatus.id?.let {
+                    firestore.collection("status").document(it)
+                        .set(updatedStatus)
+                        .addOnSuccessListener {
+                            Log.d("MainViewModel", "Status updated successfully")
+                            // Refresh data setelah berhasil mengedit status
+                            fetchStatusData()
+                        }
+                        .addOnFailureListener { e ->
+                            // Handle error
+                            Log.e("MainViewModel", "Error updating status", e)
+                        }
+                }
+            } catch (e: Exception) {
+                // Handle error
+                Log.e("MainViewModel", "Error updating status", e)
             }
         }
     }

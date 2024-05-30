@@ -25,7 +25,7 @@ fun SetupNavGraph(
             EasyWashLoginScreen(navController, viewModel)
         }
         composable(route = Screen.Dashboard.route) {
-            DashboardScreen(navController, viewModel)
+            DashboardScreen(navController = navController, viewModel = viewModel)
         }
         composable(route = Screen.TambahData.route) {
             AddDataScreen(navController = navController, viewModel = viewModel, auth = auth)
@@ -50,6 +50,9 @@ fun SetupNavGraph(
         }
         composable(route = Screen.Laporan.route){
             ReportScreen(auth = auth, navController = navController, viewModel = viewModel)
+        }
+        composable(route = Screen.Status.route) {
+            StatusScreen(navController = navController)
         }
         composable(route = Screen.DataCustomer.route) {
             CustomersScreen(navController = navController, viewModel = viewModel, auth = auth)
