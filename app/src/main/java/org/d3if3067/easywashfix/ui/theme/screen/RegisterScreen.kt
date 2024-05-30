@@ -96,7 +96,7 @@ fun EasyWashRegisterScreen(navController: NavHostController, viewModel: MainView
         TextField(
             value = fullname.value,
             onValueChange = { newValue -> fullname.value = newValue },
-            label = { Text("Enter your Full Name") },
+            label = { Text("Masukan Nama Lengkap") },
             modifier = Modifier.fillMaxWidth(),
             shape = CircleShape
         )
@@ -104,7 +104,7 @@ fun EasyWashRegisterScreen(navController: NavHostController, viewModel: MainView
         TextField(
             value = email.value,
             onValueChange = { newValue -> email.value = newValue },
-            label = { Text("Enter your Email") },
+            label = { Text("Masukan Email Anda") },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions(onNext = { keyboardController?.hide() }),
             modifier = Modifier.fillMaxWidth(),
@@ -114,7 +114,7 @@ fun EasyWashRegisterScreen(navController: NavHostController, viewModel: MainView
         TextField(
             value = phoneNumber.value,
             onValueChange = { newValue -> phoneNumber.value = newValue },
-            label = { Text("Enter your Phone Number") },
+            label = { Text("Masukan Nomor Telepon") },
             modifier = Modifier.fillMaxWidth(),
             shape = CircleShape
         )
@@ -122,7 +122,7 @@ fun EasyWashRegisterScreen(navController: NavHostController, viewModel: MainView
         TextField(
             value = password.value,
             onValueChange = { newValue -> password.value = newValue },
-            label = { Text("Enter password") },
+            label = { Text("Masukan password") },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
@@ -133,7 +133,7 @@ fun EasyWashRegisterScreen(navController: NavHostController, viewModel: MainView
         TextField(
             value = confirmPassword.value,
             onValueChange = { newValue -> confirmPassword.value = newValue },
-            label = { Text("Confirm Password") },
+            label = { Text("Ulangi password") },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { keyboardController?.hide() }),
@@ -151,14 +151,14 @@ fun EasyWashRegisterScreen(navController: NavHostController, viewModel: MainView
                         password.value,
                         onSuccess = {
                             navController.navigate(Screen.Dashboard.route)
-                            Toast.makeText(context, "Registration Successful", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Sukses Terdaftar", Toast.LENGTH_SHORT).show()
                         },
                         onFailure = {
-                            Toast.makeText(context, "Registration Failed", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Gagal Daftar", Toast.LENGTH_SHORT).show()
                         }
                     )
                 } else {
-                    Toast.makeText(context, "Passwords do not match", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Password anda salah", Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier
@@ -169,7 +169,7 @@ fun EasyWashRegisterScreen(navController: NavHostController, viewModel: MainView
                 contentColor = Color.White
             )
         ) {
-            Text("Register")
+            Text("Daftar")
         }
         Row(
             modifier = Modifier.fillMaxWidth(),

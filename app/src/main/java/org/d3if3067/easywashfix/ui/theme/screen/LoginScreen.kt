@@ -90,7 +90,7 @@ fun EasyWashLoginScreen(navController: NavHostController, viewModel: MainViewMod
         TextField(
             value = email.value,
             onValueChange = { newValue -> email.value = newValue },
-            label = { Text("Enter your Email") },
+            label = { Text("Masukan Email Anda") },
             leadingIcon = { Icon(Icons.Filled.Email, contentDescription = "Email") },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
             keyboardActions = KeyboardActions(onNext = { keyboardController?.hide() }),
@@ -101,7 +101,7 @@ fun EasyWashLoginScreen(navController: NavHostController, viewModel: MainViewMod
         TextField(
             value = password.value,
             onValueChange = { newValue -> password.value = newValue },
-            label = { Text("Enter password") },
+            label = { Text("Masukan Password") },
             leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = "Password") },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -141,7 +141,7 @@ fun EasyWashLoginScreen(navController: NavHostController, viewModel: MainViewMod
                 textAlign = TextAlign.Center
             )
             ClickableText(
-                text = AnnotatedString("Register"),
+                text = AnnotatedString("Daftar"),
                 onClick = { navController.navigate(Screen.Register.route) }, // Navigate to register screen
                 style = MaterialTheme.typography.bodySmall.copy(color = Color.Black)
             )
