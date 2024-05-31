@@ -33,11 +33,10 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.google.firebase.auth.FirebaseAuth
 import org.d3if3067.easywashfix.R
 import org.d3if3067.easywashfix.navigation.Screen
 
-@OptIn(ExperimentalComposeUiApi::class)
+//@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EasyWashLoginScreen(navController: NavHostController, viewModel: MainViewModel) {
     val email = remember { mutableStateOf("") }

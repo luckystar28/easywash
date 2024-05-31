@@ -10,16 +10,12 @@ import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -38,7 +34,7 @@ import com.google.firebase.auth.FirebaseAuth
 import org.d3if3067.easywashfix.R
 import org.d3if3067.easywashfix.navigation.Screen
 
-@OptIn(ExperimentalComposeUiApi::class)
+//@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun EasyWashRegisterScreen(navController: NavHostController, viewModel: MainViewModel) {
     val fullname = remember { mutableStateOf("") }

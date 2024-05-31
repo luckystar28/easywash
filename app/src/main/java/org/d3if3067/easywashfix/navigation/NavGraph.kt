@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.google.firebase.auth.FirebaseAuth
 import org.d3if3067.easywashfix.ui.theme.screen.*
 
@@ -54,6 +53,11 @@ fun SetupNavGraph(
         composable(route = Screen.Status.route) {
             StatusScreen(navController = navController)
         }
+//        composable(Screen.EditStatus.route + "/{statusId}") { backStackEntry ->
+//            val statusId = backStackEntry.arguments?.getString("statusId") ?: return@composable
+//            EditStatusScreen(navController = navController, statusId = statusId, viewModel = viewModel)
+//        }
+
         composable(route = Screen.DataCustomer.route) {
             CustomersScreen(navController = navController, viewModel = viewModel, auth = auth)
         }

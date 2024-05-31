@@ -16,4 +16,5 @@ sealed class Screen (val route: String){
     data object DaftarHargaMotor: Screen("motorPriceListScren")
 
     data object Status: Screen("statusScreen")
+    data object EditStatus: Screen("editStatusScreen")
 }
